@@ -7,12 +7,14 @@ class Usuario{
 }
 
 let usuarios = []
+usuarios.push(new Usuario(7444,"aaa"))
 
 const datos = document.querySelector("#datos")
 
 
 function registrarUsuario(){
 
+    usuarios.push(new Usuario(7424,"ava"))
 
     let pinx = datos.pin.value;
     let pins = datos.pin2.value
@@ -20,7 +22,8 @@ function registrarUsuario(){
     let contraseñas = datos.contraseña2.value
     let a=false
     let b=false
-    let usuarios = []
+    
+    
     
     do {
 
@@ -49,16 +52,23 @@ function registrarUsuario(){
             alert("Los valores no coinciden. Intente nuevamente2")
             
         }
-            
+
+    
         } while (b!=true);
-
-        if (pinx == pins && contraseñax == contraseñas) {
-
-            usuarios
-             
-        }
-
-
-
+        
+        usuarios.push(new Usuario(pinx,contraseñax))
+        
 
 }
+
+function mostrarUsuarios(){
+
+    usuarios.forEach((a) =>{
+
+        console.log(a)
+    })
+
+    
+
+}
+
