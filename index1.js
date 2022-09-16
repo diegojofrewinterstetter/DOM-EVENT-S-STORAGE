@@ -1,5 +1,5 @@
-class Usuario{
-    constructor(pin, contrasena){
+class Usuario {
+    constructor(pin, contrasena) {
         this.pin = pin
         this.contrasena = contrasena
 
@@ -7,8 +7,11 @@ class Usuario{
 }
 
 let usuarios = []
-//usuarios.push(new Usuario(7444,"aaa"))
 
+
+
+let submitRegister = document.querySelector("#submitRegister")
+submitRegister.addEventListener("click", registrarUsuario)
 
 function registrarUsuario(event) {
 
@@ -22,60 +25,97 @@ function registrarUsuario(event) {
     let pins = formRegister[1].value
     let contraseñax = formRegister[2].value
     let contraseñas = formRegister[3].value
-    let a=false
-    let b=false
-    
-    
-    
-    do {
+    let a = false
+    let b = false
 
-    if (pinx==pins) {
 
-        a=true
-
-    }else{
-        
-        a=true
-        alert("Los valores no coinciden. Intente nuevamente")
-        
-    }   
-        
-    } while (a!=true);
 
     do {
-    
-        if (contraseñax==contraseñas) {
-    
-            b=true
-    
-        }else{
-            
-            b=true
+
+        if (pinx == pins) {
+
+            a = true
+
+        } else {
+
+            a = true
+            alert("Los valores no coinciden. Intente nuevamente")
+
+        }
+
+    } while (a != true);
+
+    do {
+
+        if (contraseñax == contraseñas) {
+
+            b = true
+
+        } else {
+
+            b = true
             alert("Los valores no coinciden. Intente nuevamente2")
-            
+
         }
+
+
+    } while (b != true);
+
+    console.log(pinx)
+    console.log(pins)
+    console.log(contraseñas)
+    console.log(contraseñax)
 
     
-        } while (b!=true);
-        
-        console.log(pinx)
-        console.log(pins)
-        console.log(contraseñas)
-        console.log(contraseñax)
+        if (pinx == pins && contraseñax == contraseñas) {
 
-        if (pinx==pins && contraseñax==contraseñas) {
-            
             usuarios.push(new Usuario(pinx, contraseñas))
-
+    
         }
+    
+        const token = generarToken(pinx, contraseñax)
+        sessionStorage.setItem("token", token)
+        
+        //Prueba fallida de querer ocultar contenido. No ingresa al if. 
+        // const autenticado = existToken()
+        // if (autenticado) {
+        //     console.log("entre")
+        //     formRegister.className = "oculto"
+        //     let visibleh2 = document.querySelector("#registerh2")
+        //     visibleh2.className = "oculto"
+        // }
+    }
+            
 
- }
+    
 
-function login(event){
+
+
+
+
+
+function generarToken(pin, contrasena) {
+    return pin+contrasena
+}
+
+function existToken() {
+    if (localStorage.getItem("token") !== null) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
+
+
+let submitLogin = document.querySelector("#submitLogin")
+submitLogin.addEventListener("click", login)
+function login(event) {
 
     event.preventDefault();
     console.log(event);
-    
+
     let formLogin = document.querySelector("#login")
     console.dir(formLogin)
 
@@ -84,58 +124,37 @@ function login(event){
     let pinDB = " "
     let passwordDB = " "
     let k = 0
+    console.log(usuarios)
 
-    // if (pine.) {
-        
-    // }
+    if (usuarios.indexOf(pine) && usuarios.indexOf(password)) {
+        console.log(usuarios)
+        pinDB = pine
+        passwordDB = password
 
-
-    for (let i = 0; i < usuarios.length; i++) {
-        for (let j = 0; j < usuarios.length; j++) {
-
-            if (usuarios[i].pin == pine && usuarios[j].contrasena == password) {
-        
-                pinDB = pine
-                passwordDB = password
-
-                console.log(pinDB)  
-                console.log(passwordDB)
-            }
-
-            if(pinDB != " "){
-                alert("lleno")
-            }else{
-
-                alert("Credenciales incorrectas")
-            }
-
-            
-        }
-        
+        console.log(pinDB)
+        console.log(passwordDB)
     }
+    if (usuarios.includes(pinDB) || usuarios.includes(passwordDB)) alert("Credenciales incorrectas")
+    if (pinDB.trim() && passwordDB.trim()) alert("¡Se ha logeado con éxito!")
+    else alert("Credenciales incorrectas")
 
-
-
-    // usuarios.forEach((a) =>{
-
-    //     if(a.pin == pine && a.contrasena == password){
-
-             
-    //     }else
-    //     alert("Pin o contraseña incorrectos")
-    // })
 
 }
 
-function mostrarUsuarios(event){
-    
-    usuarios.forEach((a) =>{
+let ver = document.querySelector("#ver")
+ver.addEventListener("click", mostrarUsuarios)
+function mostrarUsuarios(event) {
 
-        
+    event.preventDefault()
+
+    usuarios.forEach((a) => {
+
+
         console.log(a)
     })
 
-    
+
 
 }
+
 
