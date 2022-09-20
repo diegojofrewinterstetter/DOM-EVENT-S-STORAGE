@@ -8,12 +8,13 @@ class Usuario {
 
 let usuarios = []
 
+
+
 let submitRegister = document.querySelector("#submitRegister")
 submitRegister.addEventListener("click", registrarUsuario)
 
 function registrarUsuario(event) {
 
-    sessionStorage.removeItem(0 )
     event.preventDefault();
     console.log(event);
 
@@ -27,15 +28,36 @@ function registrarUsuario(event) {
     let a = false
     let b = false
 
+
+
     do {
 
-        (pinx == pins) ? a=true : alert("Los valores no coinciden. Intente nuevamente"), a = true
+        if (pinx == pins) {
+
+            a = true
+
+        } else {
+
+            a = true
+            alert("Los valores no coinciden. Intente nuevamente")
+
+        }
 
     } while (a != true);
 
     do {
 
-        (contraseñax == contraseñas) ? b = true : alert("Los valores no coinciden. Intente nuevamente2"), b = true
+        if (contraseñax == contraseñas) {
+
+            b = true
+
+        } else {
+
+            b = true
+            alert("Los valores no coinciden. Intente nuevamente2")
+
+        }
+
 
     } while (b != true);
 
@@ -44,33 +66,40 @@ function registrarUsuario(event) {
     console.log(contraseñas)
     console.log(contraseñax)
 
-    if (pinx == pins && contraseñax == contraseñas) {
+    
+        if (pinx == pins && contraseñax == contraseñas) {
 
-        usuarios.push(new Usuario(pinx, contraseñas))
-
+            usuarios.push(new Usuario(pinx, contraseñas))
+    
+        }
+    
+        const token = generarToken(pinx, contraseñax)
+        sessionStorage.setItem("token", token)
+        
+        //Prueba fallida de querer ocultar contenido. No ingresa al if. 
+        // const autenticado = existToken()
+        // if (autenticado) {
+        //     console.log("entre")
+        //     formRegister.className = "oculto"
+        //     let visibleh2 = document.querySelector("#registerh2")
+        //     visibleh2.className = "oculto"
+        // }
     }
+            
 
-    const token = generarToken(pinx, contraseñax)
-    sessionStorage.setItem("token", token)
+    
 
-    //Prueba fallida de querer ocultar contenido. No ingresa al if. 
 
-    const autenticado = existToken()
-    if (autenticado && pinx == pins && contraseñax == contraseñas) {
-        console.log("entre")
-        formRegister.className = "oculto"
-        let visibleh2 = document.querySelector("#registerh2")
-        visibleh2.className = "oculto"
-    }
-}
+
+
+
 
 function generarToken(pin, contrasena) {
-    return pin + contrasena
+    return pin+contrasena
 }
 
 function existToken() {
-
-    if (sessionStorage.getItem("token") !== null) {
+    if (localStorage.getItem("token") !== null) {
         return true
     } else {
         return false
@@ -94,7 +123,7 @@ function login(event) {
     let password = formLogin[1].value
     let pinDB = " "
     let passwordDB = " "
-
+    let k = 0
     console.log(usuarios)
 
     if (usuarios.indexOf(pine) && usuarios.indexOf(password)) {
@@ -105,12 +134,9 @@ function login(event) {
         console.log(pinDB)
         console.log(passwordDB)
     }
-    
     if (usuarios.includes(pinDB) || usuarios.includes(passwordDB)) alert("Credenciales incorrectas")
     if (pinDB.trim() && passwordDB.trim()) alert("¡Se ha logeado con éxito!")
     else alert("Credenciales incorrectas")
-
-    
 
 
 }
@@ -130,4 +156,5 @@ function mostrarUsuarios(event) {
 
 
 }
+
 
